@@ -13,17 +13,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody2D theRB;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float bounceForce;
     private bool isGrounded;
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private LayerMask whatIsGround;
     private bool canDoubleJump;
+    private bool facingRight = true;
+
 
     [Header("Firing")]
     public int ammo;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletPrefab;
-    private bool facingRight = true;
 
+    [Header("Damage")]
     public float knockBackLength, knockBackForce, invincibleLength;
     private float knockBackCounter;
     private float invincibleCounter;
@@ -114,6 +117,10 @@ public class PlayerController : MonoBehaviour
         if (invincibleCounter > 0)
         {
             invincibleCounter -= Time.deltaTime;
+            if (invincibleCounter <= 0)
+            {
+                theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b);
+            }
         }
     }
 
@@ -131,6 +138,7 @@ public class PlayerController : MonoBehaviour
             {
                 Shrink();
                 invincibleCounter = invincibleLength;
+                StartCoroutine(Flash());
                 KnockBack();
             }
             else
@@ -167,4 +175,22 @@ public class PlayerController : MonoBehaviour
         knockBackCounter = knockBackLength;
         theRB.velocity = new Vector2(0f, knockBackForce);
     }
+
+    public void Bounce()
+    {
+        theRB.velocity = new Vector2(theRB.velocity.x, bounceForce);
+
+    }
+
+    private IEnumerator Flash()
+    {
+            Color og = theSR.color;
+            theSR.color = new Color(255f, 255f, 255f, 0.5f);
+            yield return new WaitForSeconds(0.1f);
+            theSR.color = new Color(og.r, og.g, og.b, 0.5f);
+
+        
+    }
+
+    
 }
