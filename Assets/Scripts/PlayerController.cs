@@ -31,6 +31,10 @@ public class PlayerController : MonoBehaviour
     private float knockBackCounter;
     private float invincibleCounter;
 
+    
+
+    
+
     private void Awake()
     {
         instance = this;
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour
         if (knockBackCounter <= 0)
         {
             //Movement
-            theRB.velocity = new Vector2(moveSpeed * Input.GetAxis("Horizontal"), theRB.velocity.y);
+            theRB.velocity = new Vector2(moveSpeed * InputHandler.instance.dir, theRB.velocity.y);
 
             isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, .2f, whatIsGround);
 
@@ -59,8 +63,9 @@ public class PlayerController : MonoBehaviour
                 canDoubleJump = true;
             }
 
-            if (Input.GetButtonDown("Jump"))
+            if (InputHandler.instance.isJump)
             {
+                InputHandler.instance.isJump = false;
                 if (isGrounded)
                 {
                     //AudioManager.instance.PlaySFX(3);
@@ -89,7 +94,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
             }
 
-            if (Input.GetButtonDown("Fire1"))
+            if (InputHandler.instance.isFire)
             {
                 if (ammo > 0)
                 {
@@ -154,6 +159,7 @@ public class PlayerController : MonoBehaviour
 
     private void Fire()
     {
+        InputHandler.instance.isFire = false;
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
     }
 

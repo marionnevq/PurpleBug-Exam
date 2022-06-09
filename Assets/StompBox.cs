@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StompBox : MonoBehaviour
 {
-    [SerializeField] private GameObject shroom;
+    [SerializeField] private GameObject shroom, heart;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Enemy")
@@ -25,6 +25,17 @@ public class StompBox : MonoBehaviour
                 if (dropSelect <= other.gameObject.GetComponent<EnemyType>().chanceToDrop)
                 {
                     Instantiate(shroom, other.transform.position, other.transform.rotation);
+
+                }
+            }
+
+            if (other.gameObject.GetComponent<EnemyType>().type == EnemyType.Type.flying)
+            {
+                other.transform.parent.gameObject.GetComponent<FlyingEnemyController>().Kill();
+
+                if (dropSelect <= other.gameObject.GetComponent<EnemyType>().chanceToDrop)
+                {
+                    Instantiate(heart, other.transform.position, other.transform.rotation);
 
                 }
             }
