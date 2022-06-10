@@ -31,9 +31,8 @@ public class PlayerController : MonoBehaviour
     private float knockBackCounter;
     private float invincibleCounter;
 
-    
+    public bool stopInput;
 
-    
 
     private void Awake()
     {
@@ -45,6 +44,9 @@ public class PlayerController : MonoBehaviour
     {
         theSR = GetComponent<SpriteRenderer>();
         isGrown = false;
+        stopInput = false;
+        theRB.bodyType = RigidbodyType2D.Dynamic;
+
 
     }
 
@@ -53,54 +55,58 @@ public class PlayerController : MonoBehaviour
     {
         if (knockBackCounter <= 0)
         {
-            //Movement
-            theRB.velocity = new Vector2(moveSpeed * InputHandler.instance.dir, theRB.velocity.y);
-
-            isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, .2f, whatIsGround);
-
-            if (isGrounded)
+            if (!stopInput)
             {
-                canDoubleJump = true;
-            }
+                //Movement
+                theRB.velocity = new Vector2(moveSpeed * InputHandler.instance.dir, theRB.velocity.y);
 
-            if (InputHandler.instance.isJump)
-            {
-                InputHandler.instance.isJump = false;
+                isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, .2f, whatIsGround);
+
                 if (isGrounded)
                 {
-                    //AudioManager.instance.PlaySFX(3);
-
-                    theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+                    canDoubleJump = true;
                 }
-                else
+
+                if (InputHandler.instance.isJump)
                 {
-                    if (canDoubleJump)
+                    InputHandler.instance.isJump = false;
+                    if (isGrounded)
                     {
                         //AudioManager.instance.PlaySFX(3);
 
                         theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+                    }
+                    else
+                    {
+                        if (canDoubleJump)
+                        {
+                            //AudioManager.instance.PlaySFX(3);
 
-                        canDoubleJump = false;
+                            theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+
+                            canDoubleJump = false;
+                        }
                     }
                 }
-            }
 
-            if (theRB.velocity.x < 0 && facingRight)
-            {
-                Flip();
-            }
-            else if (theRB.velocity.x > 0 && !facingRight)
-            {
-                Flip();
-            }
-
-            if (InputHandler.instance.isFire)
-            {
-                if (ammo > 0)
+                if (theRB.velocity.x < 0 && facingRight)
                 {
-                    Fire();
-                    ammo--;
+                    Flip();
                 }
+                else if (theRB.velocity.x > 0 && !facingRight)
+                {
+                    Flip();
+                }
+
+                if (InputHandler.instance.isFire)
+                {
+                    if (ammo > 0)
+                    {
+                        Fire();
+                        ammo--;
+                    }
+                }
+
             }
 
         }
@@ -165,13 +171,13 @@ public class PlayerController : MonoBehaviour
 
     public void Grow()
     {
-        transform.localScale = new Vector3(5f,10f,0f);
+        transform.localScale = new Vector3(5f, 10f, 0f);
         isGrown = true;
     }
 
     public void Shrink()
     {
-        transform.localScale = new Vector3(5f,5f,0f);
+        transform.localScale = new Vector3(5f, 5f, 0f);
 
         isGrown = false;
     }
@@ -190,13 +196,18 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Flash()
     {
-            Color og = theSR.color;
-            theSR.color = new Color(255f, 255f, 255f, 0.5f);
-            yield return new WaitForSeconds(0.1f);
-            theSR.color = new Color(og.r, og.g, og.b, 0.5f);
+        Color og = theSR.color;
+        theSR.color = new Color(255f, 255f, 255f, 0.5f);
+        yield return new WaitForSeconds(0.1f);
+        theSR.color = new Color(og.r, og.g, og.b, 0.5f);
 
-        
+
     }
 
-    
+    public void Win(){
+        theRB.velocity = Vector2.zero;
+        theRB.bodyType = RigidbodyType2D.Static;
+    }
+
+
 }
