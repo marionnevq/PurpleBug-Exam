@@ -27,8 +27,8 @@ public class Pickup : MonoBehaviour
             switch(pickupType)
             {
                 case Type.coin:
-                    GameManager.instance.coins++;
-                    UIManager.instance.UpdateCoins();
+                    GameManager.instance.score+=100;
+                    UIManager.instance.UpdateScore();
                     Destroy(gameObject);
                     break;
 
