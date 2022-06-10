@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     public bool stopInput;
 
+    public float inputX;
 
     private void Awake()
     {
@@ -58,35 +60,13 @@ public class PlayerController : MonoBehaviour
             if (!stopInput)
             {
                 //Movement
-                theRB.velocity = new Vector2(moveSpeed * InputHandler.instance.dir, theRB.velocity.y);
-
+                theRB.velocity = new Vector2(moveSpeed * inputX, theRB.velocity.y);
+                //theRB.AddForce(new Vector2(moveSpeed * inputX, theRB.velocity.y),ForceMode2D.Force);
                 isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, .2f, whatIsGround);
 
                 if (isGrounded)
                 {
                     canDoubleJump = true;
-                }
-
-                if (InputHandler.instance.isJump)
-                {
-                    InputHandler.instance.isJump = false;
-                    if (isGrounded)
-                    {
-                        //AudioManager.instance.PlaySFX(3);
-
-                        theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
-                    }
-                    else
-                    {
-                        if (canDoubleJump)
-                        {
-                            //AudioManager.instance.PlaySFX(3);
-
-                            theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
-
-                            canDoubleJump = false;
-                        }
-                    }
                 }
 
                 if (theRB.velocity.x < 0 && facingRight)
@@ -96,15 +76,6 @@ public class PlayerController : MonoBehaviour
                 else if (theRB.velocity.x > 0 && !facingRight)
                 {
                     Flip();
-                }
-
-                if (InputHandler.instance.isFire)
-                {
-                    if (ammo > 0)
-                    {
-                        Fire();
-                        ammo--;
-                    }
                 }
 
             }
@@ -135,6 +106,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Move(InputAction.CallbackContext context)
+    {
+        inputX = context.ReadValue<float>();
+    }
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            //AudioManager.instance.PlaySFX(3);
+            if (isGrounded)
+            {
+                theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+
+            }
+            else
+            {
+                //AudioManager.instance.PlaySFX(3);
+                if (canDoubleJump)
+                {
+                    theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+
+                    canDoubleJump = false;
+                }
+
+            }
+        }
+    }
     private void Flip()
     {
         facingRight = !facingRight;
@@ -163,10 +162,13 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.RespawnPlayer();
     }
 
-    private void Fire()
+    public void Fire(InputAction.CallbackContext context)
     {
-        InputHandler.instance.isFire = false;
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        if (ammo > 0 && context.performed)
+        {
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            ammo--;
+        }
     }
 
     public void Grow()
@@ -204,7 +206,8 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void Win(){
+    public void Win()
+    {
         theRB.velocity = Vector2.zero;
         theRB.bodyType = RigidbodyType2D.Static;
     }

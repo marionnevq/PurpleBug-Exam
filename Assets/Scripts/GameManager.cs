@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float waitToRespawn;
     [SerializeField] private Transform spawnPoint;
 
-
+    public CinemachineVirtualCamera vcam;
     private void Awake()
     {
         instance = this;
@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator RespawnCo()
     {
+        PlayerController.instance.inputX = 0;
         PlayerController.instance.gameObject.SetActive(false);
         yield return new WaitForSeconds(waitToRespawn);
 
@@ -54,6 +55,8 @@ public class GameManager : MonoBehaviour
         else
         {
             PlayerController.instance.gameObject.SetActive(true);
+            Vector3 delta = PlayerController.instance.gameObject.transform.position - spawnPoint.position;
+            vcam.OnTargetObjectWarped(PlayerController.instance.transform,delta);
             PlayerController.instance.gameObject.transform.position = spawnPoint.position;
             UIManager.instance.UpdateLives();
 
