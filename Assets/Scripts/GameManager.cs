@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float waitToRespawn;
     [SerializeField] private Transform spawnPoint;
 
-    public CinemachineVirtualCamera vcam;
+    [SerializeField] private CinemachineVirtualCamera vcam;
     private void Awake()
     {
         instance = this;
@@ -24,12 +24,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         UIManager.instance.UpdateScore();
         UIManager.instance.UpdateLives();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void RespawnPlayer()
@@ -56,7 +50,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerController.instance.gameObject.SetActive(true);
             Vector3 delta = PlayerController.instance.gameObject.transform.position - spawnPoint.position;
-            vcam.OnTargetObjectWarped(PlayerController.instance.transform,delta);
+            vcam.OnTargetObjectWarped(PlayerController.instance.transform, delta);
             PlayerController.instance.gameObject.transform.position = spawnPoint.position;
             UIManager.instance.UpdateLives();
 

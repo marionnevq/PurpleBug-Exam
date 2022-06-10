@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
 
-    public SpriteRenderer theSR;
-    [SerializeField] private bool isGrown;
+    [SerializeField] private SpriteRenderer theSR;
+    private bool isGrown;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
@@ -61,7 +61,6 @@ public class PlayerController : MonoBehaviour
             {
                 //Movement
                 theRB.velocity = new Vector2(moveSpeed * inputX, theRB.velocity.y);
-                //theRB.AddForce(new Vector2(moveSpeed * inputX, theRB.velocity.y),ForceMode2D.Force);
                 isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, .2f, whatIsGround);
 
                 if (isGrounded)
@@ -88,7 +87,6 @@ public class PlayerController : MonoBehaviour
             if (facingRight)
             {
                 theRB.velocity = new Vector2(-knockBackForce, theRB.velocity.y);
-
             }
             else
             {
@@ -138,7 +136,6 @@ public class PlayerController : MonoBehaviour
     {
         facingRight = !facingRight;
         transform.Rotate(0f, 180f, 0f);
-
     }
     public void DamagePlayer()
     {
@@ -193,7 +190,6 @@ public class PlayerController : MonoBehaviour
     public void Bounce()
     {
         theRB.velocity = new Vector2(theRB.velocity.x, bounceForce);
-
     }
 
     private IEnumerator Flash()
@@ -202,8 +198,6 @@ public class PlayerController : MonoBehaviour
         theSR.color = new Color(255f, 255f, 255f, 0.5f);
         yield return new WaitForSeconds(0.1f);
         theSR.color = new Color(og.r, og.g, og.b, 0.5f);
-
-
     }
 
     public void Win()
@@ -211,6 +205,4 @@ public class PlayerController : MonoBehaviour
         theRB.velocity = Vector2.zero;
         theRB.bodyType = RigidbodyType2D.Static;
     }
-
-
 }

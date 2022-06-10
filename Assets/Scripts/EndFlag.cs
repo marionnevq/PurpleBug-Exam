@@ -15,7 +15,7 @@ public class EndFlag : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     public void RecieveSignal(FlagPart.Part part)

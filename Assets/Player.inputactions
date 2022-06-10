@@ -11,7 +11,7 @@
                     "id": "939e5934-033d-4cf8-966b-99ea95c88032",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press(behavior=2)"
+                    "interactions": ""
                 },
                 {
                     "name": "Jump",
@@ -19,7 +19,7 @@
                     "id": "63bbbc71-293c-43fc-9e64-fc1c9d2fc502",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": ""
                 },
                 {
                     "name": "Fire",
@@ -27,7 +27,7 @@
                     "id": "cc0312ab-91b5-4adf-b461-cbfa263c839f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": ""
                 }
             ],
             "bindings": [

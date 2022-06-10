@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class FlyingEnemyController : MonoBehaviour
 {
-    public Transform[] points;
+    [SerializeField] private Transform[] points;
     [SerializeField] private float moveSpeed;
     private int currentPoint;
 
-    public SpriteRenderer theSr;
+    [SerializeField] private SpriteRenderer theSr;
 
     [SerializeField] private float distanceToAttackPlayer, chaseSpeed;
     private Vector3 attacktarget;

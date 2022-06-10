@@ -5,7 +5,8 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
 
-    public enum Type {
+    public enum Type
+    {
         coin,
         heart,
         ammo,
@@ -14,20 +15,15 @@ public class Pickup : MonoBehaviour
     }
 
     [SerializeField] private Type pickupType;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    private void OnTriggerEnter2D(Collider2D other) 
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
-            switch(pickupType)
+            switch (pickupType)
             {
                 case Type.coin:
-                    GameManager.instance.score+= 100;
+                    GameManager.instance.score += 100;
                     UIManager.instance.UpdateScore();
                     Destroy(gameObject);
                     break;
@@ -48,10 +44,11 @@ public class Pickup : MonoBehaviour
                     break;
 
                 case Type.shroom:
+                    GameManager.instance.score += 150;
                     PlayerController.instance.Grow();
                     Destroy(gameObject);
                     break;
             }
-        }    
+        }
     }
 }

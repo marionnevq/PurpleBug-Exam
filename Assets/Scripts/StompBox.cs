@@ -10,12 +10,8 @@ public class StompBox : MonoBehaviour
         if (other.tag == "Enemy")
         {
             PlayerController.instance.Bounce();
-
-
-
             //AudioManager.instance.PlaySFX(0);
             //Instantiate(explosionEffect, other.transform.position, other.transform.rotation);
-
             float dropSelect = Random.Range(0, 100f);
 
             if (other.gameObject.GetComponent<EnemyType>().type == EnemyType.Type.land)
@@ -39,7 +35,6 @@ public class StompBox : MonoBehaviour
 
                 }
             }
-
 
         }
     }

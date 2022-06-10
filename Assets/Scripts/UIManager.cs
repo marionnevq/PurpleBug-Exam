@@ -7,18 +7,15 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     [Header("HUD")]
-    public Text coinText, livesText;
-    public GameObject pausePanel;
+    [SerializeField] private Text coinText, livesText;
+    [SerializeField] private  GameObject pausePanel;
 
     [Header("Win")]
-
-    public GameObject winPanel;
-
-    public Text playerScore, livesLeft, finalScore;
+    [SerializeField] private  GameObject winPanel;
+    [SerializeField] private  Text playerScore, livesLeft, finalScore;
 
     [Header("Lose")]
-
-    public GameObject losePanel;
+    [SerializeField] private  GameObject losePanel;
 
 
     private void Awake()
@@ -37,7 +34,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void Win()
-    {   
+    {
 
         playerScore.text = "Score: " + GameManager.instance.score;
         livesLeft.text = "Lives Left: " + GameManager.instance.lives;

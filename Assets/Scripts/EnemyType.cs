@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class EnemyType : MonoBehaviour
 {
-    public enum Type 
+    public enum Type
     {
         land,
         flying
     }
     public Type type;
-    [Range(0,100)] public float chanceToDrop;
+    [Range(0, 100)] public float chanceToDrop;
 }
