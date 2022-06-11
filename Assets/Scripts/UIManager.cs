@@ -8,14 +8,14 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
     [Header("HUD")]
     [SerializeField] private Text coinText, livesText;
-    [SerializeField] private  GameObject pausePanel;
+    [SerializeField] private GameObject pausePanel;
 
     [Header("Win")]
-    [SerializeField] private  GameObject winPanel;
-    [SerializeField] private  Text playerScore, livesLeft, finalScore;
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private Text playerScore, livesLeft, finalScore;
 
     [Header("Lose")]
-    [SerializeField] private  GameObject losePanel;
+    [SerializeField] private GameObject losePanel;
 
 
     private void Awake()
@@ -25,12 +25,12 @@ public class UIManager : MonoBehaviour
 
     public void UpdateScore()
     {
-        coinText.text = GameManager.instance.score.ToString();
+        coinText.text = "score: " + GameManager.instance.score.ToString();
     }
 
     public void UpdateLives()
     {
-        livesText.text = GameManager.instance.lives.ToString();
+        livesText.text = "lives: " + GameManager.instance.lives.ToString();
     }
 
     public void Win()
@@ -63,5 +63,15 @@ public class UIManager : MonoBehaviour
     {
         losePanel.SetActive(true);
         yield break;
+    }
+
+    public void ShowPause()
+    {
+        pausePanel.SetActive(true);
+    }
+
+    public void HidePause()
+    {
+        pausePanel.SetActive(false);
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4426492488936293753}
   - component: {fileID: 4426492488936293752}
   - component: {fileID: 4426492488936293703}
+  - component: {fileID: 9018338128408776260}
   m_Layer: 0
   m_Name: Shroom
   m_TagString: Untagged
@@ -72,7 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -2643051324994869849, guid: 9e6beee7224039c4681a29e69c6e762b,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -112,3 +114,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupType: 4
+  pickupEffect: {fileID: 1275768242433274141, guid: c97ccb320d3477f4091c30b5b9a11f61,
+    type: 3}
+--- !u!95 &9018338128408776260
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4426492488936293702}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1237f80693bcf554b970e44b8b2e4e75, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

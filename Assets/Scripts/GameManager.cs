@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
 
     [SerializeField] private CinemachineVirtualCamera vcam;
+
+    private bool isPaused;
+
     private void Awake()
     {
         instance = this;
@@ -24,6 +28,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         UIManager.instance.UpdateScore();
         UIManager.instance.UpdateLives();
+        isPaused = false;
+        AudioManager.instance.PlayBGM();
     }
 
     public void RespawnPlayer()
@@ -40,7 +46,7 @@ public class GameManager : MonoBehaviour
 
         if (lives <= 0)
         {
-            //AudioManager.Lose();
+            AudioManager.instance.StopBGM();
             UIManager.instance.UpdateLives();
             UIManager.instance.UpdateScore();
             Time.timeScale = 0;
@@ -58,9 +64,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void Endlevel()
+    public void Endlevel(int score)
     {
-
         PlayerController.instance.Win();
         PlayerController.instance.stopInput = true;
         StartCoroutine(EndLevelCo());
@@ -69,12 +74,34 @@ public class GameManager : MonoBehaviour
 
     IEnumerator EndLevelCo()
     {
-        //AudioManager.Win()
+        AudioManager.instance.StopBGM();
         UIManager.instance.UpdateLives();
         UIManager.instance.UpdateScore();
         yield return new WaitForSeconds(2f);
         Time.timeScale = 1f;
         UIManager.instance.Win();
 
+    }
+
+    public void PauseGame(){
+
+        
+        if(!isPaused){
+            isPaused = true;
+            Time.timeScale = 0f;
+            UIManager.instance.ShowPause();
+        } else {
+            isPaused = false;
+            Time.timeScale = 1f;
+            UIManager.instance.HidePause();
+        }
+    }
+
+    public void RestartLevel(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void MainMenu(){
+        SceneManager.LoadScene("MainMenu");
     }
 }

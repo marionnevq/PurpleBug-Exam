@@ -43,6 +43,6 @@ public class EndFlag : MonoBehaviour
     {
         isFin = true;
         GameManager.instance.score += score;
-        GameManager.instance.Endlevel();
+        GameManager.instance.Endlevel(GameManager.instance.score);
     }
 }

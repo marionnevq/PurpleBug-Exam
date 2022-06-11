@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
 
     [SerializeField] private SpriteRenderer theSR;
+    [SerializeField] private Sprite normal, grown;
+    [SerializeField] private GameObject deathEffect;
+
     private bool isGrown;
 
     [Header("Movement")]
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
         isGrown = false;
         stopInput = false;
         theRB.bodyType = RigidbodyType2D.Dynamic;
+        theSR.sprite = normal;
 
 
     }
@@ -113,7 +117,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            //AudioManager.instance.PlaySFX(3);
+            AudioManager.instance.PlaySFX(1);
             if (isGrounded)
             {
                 theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
@@ -121,7 +125,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                //AudioManager.instance.PlaySFX(3);
+                AudioManager.instance.PlaySFX(1);
                 if (canDoubleJump)
                 {
                     theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
@@ -141,8 +145,11 @@ public class PlayerController : MonoBehaviour
     {
         if (invincibleCounter <= 0)
         {
+                
+            
             if (isGrown)
             {
+                AudioManager.instance.PlaySFX(3);
                 Shrink();
                 invincibleCounter = invincibleLength;
                 StartCoroutine(Flash());
@@ -150,12 +157,15 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                
                 KillPlayer();
             }
         }
     }
     public void KillPlayer()
     {
+        AudioManager.instance.PlaySFX(3);
+        Instantiate(deathEffect, transform.position, transform.rotation);
         GameManager.instance.RespawnPlayer();
     }
 
@@ -163,6 +173,8 @@ public class PlayerController : MonoBehaviour
     {
         if (ammo > 0 && context.performed)
         {
+                AudioManager.instance.PlaySFX(2);
+
             Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             ammo--;
         }
@@ -170,13 +182,13 @@ public class PlayerController : MonoBehaviour
 
     public void Grow()
     {
-        transform.localScale = new Vector3(5f, 10f, 0f);
+        transform.localScale = new Vector3(3f, 6f, 0f);
         isGrown = true;
     }
 
     public void Shrink()
     {
-        transform.localScale = new Vector3(5f, 5f, 0f);
+        transform.localScale = new Vector3(3f, 3f, 0f);
 
         isGrown = false;
     }

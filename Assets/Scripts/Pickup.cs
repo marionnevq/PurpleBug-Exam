@@ -15,21 +15,27 @@ public class Pickup : MonoBehaviour
     }
 
     [SerializeField] private Type pickupType;
+    [SerializeField] private GameObject pickupEffect;
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
+            Instantiate(pickupEffect, other.transform.position, other.transform.rotation);
             switch (pickupType)
             {
                 case Type.coin:
+                    AudioManager.instance.PlaySFX(4);
                     GameManager.instance.score += 100;
                     UIManager.instance.UpdateScore();
                     Destroy(gameObject);
                     break;
 
                 case Type.heart:
+                    AudioManager.instance.PlaySFX(5);
                     GameManager.instance.lives++;
+                    GameManager.instance.score += 150;
                     UIManager.instance.UpdateLives();
                     Destroy(gameObject);
                     break;
@@ -44,7 +50,8 @@ public class Pickup : MonoBehaviour
                     break;
 
                 case Type.shroom:
-                    GameManager.instance.score += 150;
+                    AudioManager.instance.PlaySFX(5);
+                    GameManager.instance.score += 200;
                     PlayerController.instance.Grow();
                     Destroy(gameObject);
                     break;

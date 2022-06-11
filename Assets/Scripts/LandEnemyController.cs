@@ -5,7 +5,7 @@ using UnityEngine;
 public class LandEnemyController : MonoBehaviour
 {
     Rigidbody2D theRb;
-    SpriteRenderer theSr;
+     [SerializeField] private SpriteRenderer theSr;
     [SerializeField] private Transform leftPoint, rightPoint;
     [SerializeField] private float moveSpeed;
     [SerializeField] private bool moveToRight;
@@ -46,8 +46,9 @@ public class LandEnemyController : MonoBehaviour
             }
             else
             {
-                theRb.velocity = new Vector2(-moveSpeed, theRb.velocity.y);
                 theSr.flipX = true;
+                theRb.velocity = new Vector2(-moveSpeed, theRb.velocity.y);
+                
 
                 if (transform.position.x < leftPoint.position.x)
                 {
