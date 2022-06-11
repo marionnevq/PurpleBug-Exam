@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class MainMenuScript : MonoBehaviour
 {
     [SerializeField] public GameObject levelSelect, leaderboards;
-    public void Play()
+    public void Play(int i)
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(i);
     }
 
     public void OpenLevelSelect()
