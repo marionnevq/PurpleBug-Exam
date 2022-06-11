@@ -10,9 +10,10 @@ public class GameManager : MonoBehaviour
     public int lives;
     public int score;
     [SerializeField] private float waitToRespawn;
-    [SerializeField] private Transform spawnPoint;
 
     [SerializeField] private CinemachineVirtualCamera vcam;
+    [SerializeField] private string nextScene;
+
 
     private bool isPaused;
 
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         UIManager.instance.UpdateScore();
         UIManager.instance.UpdateLives();
+        UIManager.instance.UpdateAmmo();
         isPaused = false;
         AudioManager.instance.PlayBGM();
     }
@@ -55,9 +57,9 @@ public class GameManager : MonoBehaviour
         else
         {
             PlayerController.instance.gameObject.SetActive(true);
-            Vector3 delta = PlayerController.instance.gameObject.transform.position - spawnPoint.position;
+            Vector3 delta = PlayerController.instance.gameObject.transform.position - CheckpointManager.instance.spawnPoint;
             vcam.OnTargetObjectWarped(PlayerController.instance.transform, delta);
-            PlayerController.instance.gameObject.transform.position = spawnPoint.position;
+            PlayerController.instance.gameObject.transform.position = CheckpointManager.instance.spawnPoint;
             UIManager.instance.UpdateLives();
 
         }
@@ -103,5 +105,10 @@ public class GameManager : MonoBehaviour
 
     public void MainMenu(){
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(nextScene);
     }
 }

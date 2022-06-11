@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     [Header("HUD")]
-    [SerializeField] private Text coinText, livesText;
+    [SerializeField] private Text coinText, livesText, ammoText;
     [SerializeField] private GameObject pausePanel;
 
     [Header("Win")]
@@ -33,6 +33,13 @@ public class UIManager : MonoBehaviour
         livesText.text = "lives: " + GameManager.instance.lives.ToString();
     }
 
+    public void UpdateAmmo()
+    {
+        ammoText.text = "ammo: " + PlayerController.instance.ammo.ToString();
+    }
+
+
+
     public void Win()
     {
 
@@ -45,12 +52,16 @@ public class UIManager : MonoBehaviour
 
     IEnumerator WinCo()
     {
+        AudioManager.instance.PlaySFX(7);
         winPanel.SetActive(true);
         yield return new WaitForSeconds(0.5f);
+        AudioManager.instance.PlaySFX(7);
         playerScore.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
+        AudioManager.instance.PlaySFX(7);
         livesLeft.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.5f);
+        AudioManager.instance.PlaySFX(7);
         finalScore.gameObject.SetActive(true);
     }
 

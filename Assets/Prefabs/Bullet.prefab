@@ -135,3 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   rb: {fileID: 2730096121141278399}
+  explosionEffect: {fileID: 4415305352976619192, guid: 350886c972d20d14d97d9f1071e37e02,
+    type: 3}
+  shroom: {fileID: 4426492488936293702, guid: dfeac269d50ef29489532b61f7028b79, type: 3}
+  heart: {fileID: 2111006382602545591, guid: a1236858d32757e4094678617d4be758, type: 3}

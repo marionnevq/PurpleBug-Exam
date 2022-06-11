@@ -145,8 +145,8 @@ public class PlayerController : MonoBehaviour
     {
         if (invincibleCounter <= 0)
         {
-                
-            
+
+
             if (isGrown)
             {
                 AudioManager.instance.PlaySFX(3);
@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                
+
                 KillPlayer();
             }
         }
@@ -173,10 +173,12 @@ public class PlayerController : MonoBehaviour
     {
         if (ammo > 0 && context.performed)
         {
-                AudioManager.instance.PlaySFX(2);
+            AudioManager.instance.PlaySFX(2);
 
             Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             ammo--;
+            UIManager.instance.UpdateAmmo();
+
         }
     }
 

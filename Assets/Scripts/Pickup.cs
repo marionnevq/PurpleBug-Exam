@@ -41,7 +41,9 @@ public class Pickup : MonoBehaviour
                     break;
 
                 case Type.ammo:
+                    AudioManager.instance.PlaySFX(4);
                     PlayerController.instance.ammo++;
+                    UIManager.instance.UpdateAmmo();
                     Destroy(gameObject);
                     break;
 
