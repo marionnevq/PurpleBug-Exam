@@ -2,8 +2,11 @@
 Exam for PurpleBug by Marionne Virgil Quintana
 
 Implemented Extra Credit:
+
 -Three or more distinct consecutive levels, with increasing difficulty
+
 -Custom visuals and shaders
+
 -Custom soundtracks and SFX
 
 I have implemented these three because I have previous knowledge on how to implement them. Due to time constraints, I believe that it would be most efficient to 
@@ -13,6 +16,7 @@ new levels.
 Note: The following assets are used from the following sources:
 
 BGM - zapsplat.com
+
 Tile Palette (environment only) - Unity asset store - Aekiro
 
 The rest of the assets are created by me.
