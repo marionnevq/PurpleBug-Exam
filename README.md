@@ -12,7 +12,7 @@ new levels.
 
 Note: The following assets are used from the following sources:
 
-BGM - zapsplat.com
-Tile Palette (environment only) - Unity asset store - Aekiro
+-BGM - zapsplat.com
+-Tile Palette (environment only) - Unity asset store - Aekiro
 
 The rest of the assets are created by me.
